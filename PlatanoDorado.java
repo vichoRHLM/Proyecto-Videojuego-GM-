@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 
-public class PlatanoDorado extends Platano{
+public class PlatanoDorado extends Platano implements EfectoPlatano{
 	
 	private static Texture dropGoldPlatano = new Texture(Gdx.files.internal("platano_dorado.png"));
 	
@@ -15,15 +15,16 @@ public class PlatanoDorado extends Platano{
 		super(newTextureBanana, ss);
 
 	}
-    
+	@Override
 	public void efectoPlatano(GranMono gm) {
 		gm.sumarPuntos(100);
-		//gm.invertirControles;
+		gm.invertirControles();
 		sonidoColision.play();
 	}
 	
 	public void draw(SpriteBatch batch , Rectangle hitBox) {
 		batch.draw(dropGoldPlatano, hitBox.x, hitBox.y);
 	}
+	
 	
 }

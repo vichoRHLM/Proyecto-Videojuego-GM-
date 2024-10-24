@@ -1,7 +1,6 @@
 package puppy.code;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,12 +18,23 @@ public class GranMono {
 	   private boolean herido = false;
 	   private int tiempoHeridoMax=50;
 	   private int tiempoHerido;
+	   private boolean invertido = false;
+	   private int tiempoInvertidoMax = 350;
+	   private int tiempoInvertido;
+       private Sound sonidoControlesInvertidos;
+       private EstrategiaMovimiento moveStrategy;
 	   
 	   
 	   public GranMono(Texture tex, Sound ss) {
 		   monkeyImage = tex;
 		   sonidoHerido = ss;
+		   
+		   sonidoControlesInvertidos = Gdx.audio.newSound(Gdx.files.internal("efectoDorado.mp3"));
 	   }
+	   
+	   public void setEstrategiaMovimiento(EstrategiaMovimiento nuevaEstrategia) {
+	        this.moveStrategy = nuevaEstrategia;
+	    }
 	   
 		public int getVidas() {
 			return vidas;
@@ -52,6 +62,7 @@ public class GranMono {
 		  vidas--;
 		  herido = true;
 		  tiempoHerido=tiempoHeridoMax;
+		  sonidoHerido.setVolume(1, 100);
 		  sonidoHerido.play();
 	   }
 	   public void dibujar(SpriteBatch batch) {
@@ -64,31 +75,37 @@ public class GranMono {
 		   if (tiempoHerido<=0) herido = false;
 		 }
 	   } 
-	   
-	   
-	   public void actualizarMovimiento() { 
-		   // movimiento desde mouse/touch
-		   /*if(Gdx.input.isTouched()) {
-			      Vector3 touchPos = new Vector3();
-			      touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			      camera.unproject(touchPos);
-			      bucket.x = touchPos.x - 64 / 2;
-			}*/
-		   //movimiento desde teclado
-		   if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) monkey.x -= velx * Gdx.graphics.getDeltaTime();
-		   if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) monkey.x += velx * Gdx.graphics.getDeltaTime();
-		   // que no se salga de los bordes izq y der
-		   if(monkey.x < 0) monkey.x = 0;
-		   if(monkey.x > 800 - 64) monkey.x = 800 - 64;
-	   }
-	    
-
-	public void destruir() {
-			monkeyImage.dispose();
+	  
+	   public void destruir() {
+		   sonidoControlesInvertidos.stop();
+		   monkeyImage.dispose();
 	   }
 	
-   public boolean estaHerido() {
-	   return herido;
-   }
+	   public boolean estaHerido() {
+		   return herido;
+	   }
 	   
+	   public void invertirControles() {
+		   sonidoControlesInvertidos.stop();
+		   invertido = true;
+		   tiempoInvertido = tiempoInvertidoMax; //Este valor se debe cambiar si se desea aumentar la duracion de los controles invertidos
+		   sonidoControlesInvertidos.play();
+	   }
+	   
+	   public boolean estanControlesInvertidos() {
+		   return invertido;
+	   }
+	  
+	   public void disminuirTiempoInvertido() {
+		   // Reducir el temporizador
+	       tiempoInvertido--;
+		   
+		   if (tiempoInvertido <= 0) {
+	            invertido = false;
+	       }
+	   }
+	   
+	   public void actualizarMovimiento() {
+		   	moveStrategy.mover(monkey, velx);
+	   }
 }

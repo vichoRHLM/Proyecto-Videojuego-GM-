@@ -13,9 +13,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class CaidaPlatanos {
 	private Array<Platano> bananaDropsType;
 	private long lastDropTime;
-	/*private PlatanoDorado goldBanana;
-	private PlatanoPodrido rottenBanana;
-	private PlatanoNormal normalBanana;*/
 	private Sound dropSound;
 	private Music jungleMusic;
 	private Texture platanoPodridoTexture;
@@ -65,23 +62,23 @@ public class CaidaPlatanos {
 	   // generar lluvia platanos
 	   if(TimeUtils.nanoTime() - lastDropTime > 150000000) crearBananaDrops();
 
-	   // revisar si las gotas cayeron al suelo o chocaron con el tarro
-	   //tamo recorriendo lo platano
+	   // Ciclo que revisa si los platanos cayeron al suelo (1) o chocaron con el personaje (1)
 	   for (int i=0; i < bananaDropsType.size; i++ ) {
+		  // auxiliar de tipo platano
 		  Platano platanoEnArray = bananaDropsType.get(i);
 		  
 		  platanoEnArray.getHitbox().y -= 300 * Gdx.graphics.getDeltaTime();
-	      //cae al suelo y se elimina
 		  
+	      //cae al suelo y se elimina (1)
 	      if(platanoEnArray.getHitbox().y + 64 < 0) { 
 	    	  bananaDropsType.removeIndex(i);
 	      }
-	      if(platanoEnArray.colisionaConHitBoxMono(GM.getArea())) { //la gota choca con el tarro
+	    //platano choca con el personaje (2)
+	      if(platanoEnArray.colisionaConHitBoxMono(GM.getArea())) { 
 	    		platanoEnArray.efectoPlatano(GM);
 	    	    bananaDropsType.removeIndex(i);
 	      }
 	   }
-	   
 	  return GM.getVidas() > 0; 
    }
    

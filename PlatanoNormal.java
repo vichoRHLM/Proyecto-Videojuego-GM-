@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class PlatanoNormal extends Platano{
+public class PlatanoNormal extends Platano implements EfectoPlatano{
 
 	private static Texture dropNormalPlatano = new Texture(Gdx.files.internal("Platano_normal.png"));
 	
@@ -14,7 +14,7 @@ public class PlatanoNormal extends Platano{
 		super(newTextureBanana, ss);
 
 	}
-	
+	@Override
 	public void efectoPlatano(GranMono gm) {
 		gm.sumarPuntos(10);
 		sonidoColision.play();
