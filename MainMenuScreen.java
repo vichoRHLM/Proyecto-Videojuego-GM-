@@ -15,73 +15,95 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainMenuScreen implements Screen {
-    final GameLluviaMenu game;
-    private SpriteBatch batch;
-    private BitmapFont fontButtons;
-    private BitmapFont font;
+    private final GameLluviaMenu game;
+    private final SpriteBatch batch;
+    private final BitmapFont fontButtons;
+    private final BitmapFont font;
     private OrthographicCamera camera;
-    private Texture imagenDeFondo;
-    private Stage stage;
+    private final Texture imagenDeFondo;
+    private final Stage stage;
     private TextButton buttonJugar, buttonOpciones, buttonPersonaje, buttonSalir, buttonComoJugar;
-    private TextButtonStyle textButtonStyle;
-    private Texture flecha;
-    
-    
+    private final TextButtonStyle textButtonStyle;
+    private final Texture flecha;
+
     public MainMenuScreen(final GameLluviaMenu game) {
         this.game = game;
         this.batch = game.getBatch();
         this.fontButtons = game.getFont();
         this.font = game.getFontEspecial();
-        font.setColor(Color.WHITE);
-        fontButtons.setColor(Color.WHITE);
         
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        configureFonts();
+        configureCamera();
+		this.camera = new OrthographicCamera();
         
         imagenDeFondo = new Texture(Gdx.files.internal("menuPrincipal.png"));
         flecha = new Texture(Gdx.files.internal("flecha.png"));
         
-        //Definir stage donde se dibujaran los botones.
-        stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
+        stage = createStage();
+        textButtonStyle = createTextButtonStyle();
         
-        //Definir estilo de boton.
-        textButtonStyle = new TextButtonStyle();
-        textButtonStyle.font = fontButtons;
-        textButtonStyle.fontColor = Color.WHITE;
-        textButtonStyle.downFontColor = Color.GREEN;
+        initializeButtons();
+        addButtonsToStage();
+    }
 
-        //Creaccione de botones (nombres y tipos).
+    private void configureFonts() {
+        font.setColor(Color.WHITE);
+        fontButtons.setColor(Color.WHITE);
+    }
+
+    private void configureCamera() {
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 480);
+    }
+
+    private Stage createStage() {
+        Stage stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        return stage;
+    }
+
+    private TextButtonStyle createTextButtonStyle() {
+        TextButtonStyle style = new TextButtonStyle();
+        style.font = fontButtons;
+        style.fontColor = Color.WHITE;
+        style.downFontColor = Color.GREEN;
+        return style;
+    }
+
+    private void initializeButtons() {
         buttonJugar = new TextButton("JUGAR", textButtonStyle);
         buttonOpciones = new TextButton("OPCIONES", textButtonStyle);
         buttonPersonaje = new TextButton("PERSONAJE", textButtonStyle);
         buttonSalir = new TextButton("SALIR", textButtonStyle);
         buttonComoJugar = new TextButton("?", textButtonStyle);
-        
-        
-        //Posiciones de botones.
+
+        setButtonPositions();
+        setButtonListeners();
+    }
+
+    private void setButtonPositions() {
         buttonJugar.setPosition(520, 310);
-        buttonOpciones.setPosition(510, 260);
-        buttonPersonaje.setPosition(505, 210);
-        buttonSalir.setPosition(525, 160);
+        buttonOpciones.setPosition(500, 260);
+        buttonPersonaje.setPosition(510, 210);
+        buttonSalir.setPosition(530, 160);
         buttonComoJugar.setPosition(20, 20);
-        
-        //Reacciones de botones.
+    }
+
+    private void setButtonListeners() {
         buttonJugar.addListener(new BotonJugarListener(game));
-        buttonOpciones.addListener(new BotonOpcionesListener(game));    // Falta OpcionesScreen
-        buttonPersonaje.addListener(new BotonPersonajeListener(game));  // Falta PersonajesScreen
+        buttonOpciones.addListener(new BotonOpcionesListener(game));
+        buttonPersonaje.addListener(new BotonPersonajeListener(game));
         buttonSalir.addListener(new BotonSalirListener());
-        buttonComoJugar.addListener(new BotonComoJugarListener(game));          // Falta TutorialScreen 
-        
-        //Se agregan los botones en el stage.
+        buttonComoJugar.addListener(new BotonComoJugarListener(game));
+    }
+
+    private void addButtonsToStage() {
         stage.addActor(buttonJugar);
         stage.addActor(buttonOpciones);
         stage.addActor(buttonPersonaje);
         stage.addActor(buttonSalir);
         stage.addActor(buttonComoJugar);
-        
     }
-    
     
     
     @Override
@@ -90,7 +112,11 @@ public class MainMenuScreen implements Screen {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         
-        // Dibujar el fondo
+        drawBackground();
+        drawStage(delta);
+    }
+
+    private void drawBackground() {
         batch.begin();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -101,33 +127,34 @@ public class MainMenuScreen implements Screen {
         fontButtons.getData().setScale(2, 2);
         font.draw(batch, "COMO JUGAR", 86 , 95);
         batch.end();
-        
-        // Dibujar y actualizar el stage
+    }
+
+    private void drawStage(float delta) {
         stage.act(delta);
         stage.draw();
     }
-    
+
     @Override
     public void dispose() {
         stage.dispose();
         imagenDeFondo.dispose();
     }
-    
+
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
         camera.setToOrtho(false, width, height);
     }
-    
+
     @Override
     public void show() {}
-    
+
     @Override
     public void hide() {}
-    
+
     @Override
     public void pause() {}
-    
+
     @Override
     public void resume() {}
 }
