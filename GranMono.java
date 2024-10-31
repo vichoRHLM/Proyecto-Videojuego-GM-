@@ -19,7 +19,7 @@ public class GranMono {
 	   private int tiempoHeridoMax=50;
 	   private int tiempoHerido;
 	   private boolean invertido = false;
-	   private int tiempoInvertidoMax = 350;
+	   private int tiempoInvertidoMax = 450;
 	   private int tiempoInvertido;
        private Sound sonidoControlesInvertidos;
        private EstrategiaMovimiento moveStrategy;

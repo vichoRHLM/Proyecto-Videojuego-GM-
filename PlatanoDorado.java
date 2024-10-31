@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 
-public class PlatanoDorado extends Platano implements EfectoPlatano{
+public class PlatanoDorado extends Platano{
 	
 	private static Texture dropGoldPlatano = new Texture(Gdx.files.internal("platano_dorado.png"));
 	

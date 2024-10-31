@@ -61,9 +61,9 @@ public class MainMenuScreen implements Screen {
         
         //Posiciones de botones.
         buttonJugar.setPosition(520, 310);
-        buttonOpciones.setPosition(500, 260);
-        buttonPersonaje.setPosition(510, 210);
-        buttonSalir.setPosition(530, 160);
+        buttonOpciones.setPosition(510, 260);
+        buttonPersonaje.setPosition(505, 210);
+        buttonSalir.setPosition(525, 160);
         buttonComoJugar.setPosition(20, 20);
         
         //Reacciones de botones.
@@ -95,11 +95,11 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.draw(imagenDeFondo, 0, 0, 800, 480);
-        batch.draw(flecha, 30, 25, 70, 50);
+        batch.draw(flecha, 36, 33, 50, 50);
         
         font.getData().setScale(1.5f, 1.5f);
         fontButtons.getData().setScale(2, 2);
-        font.draw(batch, "COMO JUGAR", 90 , 85);
+        font.draw(batch, "COMO JUGAR", 86 , 95);
         batch.end();
         
         // Dibujar y actualizar el stage
