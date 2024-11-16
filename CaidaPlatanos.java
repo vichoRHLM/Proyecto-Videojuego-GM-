@@ -79,8 +79,7 @@ public class CaidaPlatanos {
 
             if (haCaidoAlSuelo(platano)) {
                 bananaDropsType.removeIndex(i);
-            } else if (platano.colisionaConHitBoxMono(granMono.getArea())) {
-                platano.efectoPlatano(granMono);
+            } else if (platano.efectoColision(granMono)) {
                 bananaDropsType.removeIndex(i);
             }
         }
@@ -97,7 +96,7 @@ public class CaidaPlatanos {
 
     public void actualizarDibujoCaidaBananas(SpriteBatch batch) {
         for (Platano platano : bananaDropsType) {
-            platano.draw(batch, platano.getHitbox());
+            platano.draw(batch);
         }
     }
 

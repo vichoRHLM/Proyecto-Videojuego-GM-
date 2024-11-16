@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 
 public class PlatanoPodrido extends Platano{
 	
@@ -19,8 +18,8 @@ public class PlatanoPodrido extends Platano{
 		gm.dañar();
 	}
 	
-	public void draw(SpriteBatch batch , Rectangle hitBox) {
-		batch.draw(dropRottenPlatano, hitBox.x, hitBox.y);
+	public void draw(SpriteBatch batch) {
+		batch.draw(dropRottenPlatano, getHitbox().x, getHitbox().y);
 	}
 	
 }

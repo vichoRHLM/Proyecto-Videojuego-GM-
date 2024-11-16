@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 
 
 public class PlatanoDorado extends Platano{
@@ -16,14 +15,14 @@ public class PlatanoDorado extends Platano{
 
 	}
 	@Override
-	public void efectoPlatano(GranMono gm) {
+	protected void efectoPlatano(GranMono gm) {
 		gm.sumarPuntos(100);
 		gm.invertirControles();
 		sonidoColision.play();
 	}
 	
-	public void draw(SpriteBatch batch , Rectangle hitBox) {
-		batch.draw(dropGoldPlatano, hitBox.x, hitBox.y);
+	public void draw(SpriteBatch batch) {
+		batch.draw(dropGoldPlatano, getHitbox().x, getHitbox().y);
 	}
 	
 	

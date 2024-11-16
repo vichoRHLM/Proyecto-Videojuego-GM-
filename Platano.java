@@ -25,15 +25,25 @@ public abstract class Platano {
 		
 	}
 	
+	
 	public boolean colisionaConHitBoxMono(Rectangle areaMono) {
         return posicion.overlaps(areaMono);
     }
+	
+	public boolean efectoColision(GranMono gm) {
+		if(colisionaConHitBoxMono(gm.getArea())) {
+			efectoPlatano(gm);
+			return true;
+		}
+		return false;
+	}
 	
 	public Rectangle getHitbox() {
 		return posicion;
 	}
 	
-	public abstract void draw(SpriteBatch batch , Rectangle hitBox);
-	public abstract void efectoPlatano(GranMono gm);
+	
+	protected abstract void draw(SpriteBatch batch);
+	protected abstract void efectoPlatano(GranMono gm);
 	
 }
