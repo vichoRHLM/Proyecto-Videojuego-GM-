@@ -40,8 +40,8 @@ public class GameScreen implements Screen {
         Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.mp3"));
         gameOverSound = Gdx.audio.newSound(Gdx.files.internal("gameOverSound.mp3"));
         Music jungleMusic = Gdx.audio.newMusic(Gdx.files.internal("4-44. Scrapbook.mp3"));
-        
-        dropsBananas = new CaidaPlatanos(dropSound, jungleMusic, dropGoldPlatano, dropRottenPlatano, dropNormalPlatano);
+        //Inicialización de la instancia propia de la clase CaidaPlatanos
+        dropsBananas = CaidaPlatanos.getInstancia(dropSound, jungleMusic, dropGoldPlatano, dropRottenPlatano, dropNormalPlatano);
         monkey = new GranMono(new Texture(Gdx.files.internal("GM.png")), hurtSound);
     }
 

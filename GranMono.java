@@ -24,21 +24,20 @@ public class GranMono {
        private Sound sonidoControlesInvertidos;
        private EstrategiaMovimiento moveStrategy;
 	   
-	   
-	   public GranMono(Texture tex, Sound ss) {
+       public GranMono(Texture tex, Sound ss) {
 		   monkeyImage = tex;
 		   sonidoHerido = ss;
 		   
 		   sonidoControlesInvertidos = Gdx.audio.newSound(Gdx.files.internal("efectoDorado.mp3"));
 	   }
 	   
-	   public void setEstrategiaMovimiento(EstrategiaMovimiento nuevaEstrategia) {
+       public void setEstrategiaMovimiento(EstrategiaMovimiento nuevaEstrategia) {
 	        this.moveStrategy = nuevaEstrategia;
-	    }
+	   }
 	   
-		public int getVidas() {
+       public int getVidas() {
 			return vidas;
-		}
+       }
 	
 		public int getPuntos() {
 			return puntos;
@@ -50,8 +49,7 @@ public class GranMono {
 			puntos+=pp;
 		}
 		
-	
-	   public void crear() {
+		public void crear() {
 			   monkey = new Rectangle();
 			   monkey.x = 800 / 2 - 64 / 2;
 			   monkey.y = 20;
@@ -98,14 +96,14 @@ public class GranMono {
 	  
 	   public void disminuirTiempoInvertido() {
 		   // Reducir el temporizador
-	       tiempoInvertido--;
+		       tiempoInvertido--;
+			   
+			   if (tiempoInvertido <= 0) {
+		            invertido = false;
+		       }
+		   }
 		   
-		   if (tiempoInvertido <= 0) {
-	            invertido = false;
-	       }
-	   }
-	   
-	   public void actualizarMovimiento() {
-		   	moveStrategy.mover(monkey, velx);
-	   }
-}
+		   public void actualizarMovimiento() {
+			   	moveStrategy.mover(monkey, velx);
+		   }
+	}

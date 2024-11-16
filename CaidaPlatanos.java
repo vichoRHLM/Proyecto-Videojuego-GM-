@@ -10,7 +10,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class CaidaPlatanos {
-    private Array<Platano> bananaDropsType;
+	//Implementacion del patron Singleton
+	private static CaidaPlatanos instancia;
+	
+    private Array<Platano> bananaDropsType;  //Array de clase abstracta platano
     private long lastDropTime;
     private final Sound dropSound;
     private final Music jungleMusic;
@@ -18,12 +21,20 @@ public class CaidaPlatanos {
     private final Texture platanoNormalTexture;
     private final Texture platanoDoradoTexture;
 
-    public CaidaPlatanos(Sound dropSound, Music jungleMusic, Texture platanoDoradoTexture, Texture platanoPodridoTexture, Texture platanoNormalTexture) {
+    //Implementacion del patron Singleton
+    private CaidaPlatanos(Sound dropSound, Music jungleMusic, Texture platanoDoradoTexture, Texture platanoPodridoTexture, Texture platanoNormalTexture) {
         this.dropSound = dropSound;
         this.jungleMusic = jungleMusic;
         this.platanoPodridoTexture = platanoPodridoTexture;
         this.platanoNormalTexture = platanoNormalTexture;
         this.platanoDoradoTexture = platanoDoradoTexture;
+    }
+    
+    //Implementacion del patron Singleton
+    public static CaidaPlatanos getInstancia(Sound dropSound, Music jungleMusic, Texture platanoDoradoTexture, Texture platanoPodridoTexture, Texture platanoNormalTexture) {
+    	if (CaidaPlatanos.instancia == null)
+    		CaidaPlatanos.instancia = new CaidaPlatanos(dropSound, jungleMusic, platanoDoradoTexture, platanoPodridoTexture, platanoPodridoTexture);
+    	return CaidaPlatanos.instancia;
     }
 
     public void crear() {
