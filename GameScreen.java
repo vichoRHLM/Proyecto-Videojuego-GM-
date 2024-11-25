@@ -18,8 +18,9 @@ public class GameScreen implements Screen {
     private BitmapFont font;
     private GranMono monkey;
     private CaidaPlatanos dropsBananas;
-    private Texture imagenDeFondo;
     private Sound gameOverSound;
+    private Dealership escena;
+    private Builder builderEscena;
 
     public GameScreen(final GameLluviaMenu game) {
         this.game = game;
@@ -36,10 +37,15 @@ public class GameScreen implements Screen {
         Texture dropRottenPlatano = new Texture(Gdx.files.internal("Platano_podrido.png"));
         Texture dropNormalPlatano = new Texture(Gdx.files.internal("Platano_normal.png"));
         
-        imagenDeFondo = new Texture(Gdx.files.internal("jungleTheme.png"));
+        escena = new Dealership();
+        builderEscena = new BuilderEscena();
+        
+        escena.EscenaInicio(builderEscena);
+        
         Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.mp3"));
         gameOverSound = Gdx.audio.newSound(Gdx.files.internal("gameOverSound.mp3"));
         Music jungleMusic = Gdx.audio.newMusic(Gdx.files.internal("4-44. Scrapbook.mp3"));
+        
         //Inicialización de la instancia propia de la clase CaidaPlatanos
         dropsBananas = CaidaPlatanos.getInstancia(dropSound, jungleMusic, dropGoldPlatano, dropRottenPlatano, dropNormalPlatano);
         monkey = new GranMono(new Texture(Gdx.files.internal("GM.png")), hurtSound);
@@ -53,6 +59,7 @@ public class GameScreen implements Screen {
         // Initialize monkey and drop elements
         monkey.crear();
         dropsBananas.crear();
+        
     }
 
     @Override
@@ -72,6 +79,13 @@ public class GameScreen implements Screen {
             }
         }
         
+        if(monkey.getPuntos() > 500 && monkey.getPuntos() < 1200) {
+        	escena.Escena2(builderEscena);
+        	
+        }else if (monkey.getPuntos() > 1200) {
+        	escena.Escena3(builderEscena);
+        }
+        
         applyMovementStrategy();
         monkey.actualizarMovimiento();
         monkey.dibujar(batch);
@@ -83,7 +97,7 @@ public class GameScreen implements Screen {
     private void renderBackground() {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.draw(imagenDeFondo, 0, 0, 800, 480);
+        batch.draw(builderEscena.getFondo(), 0, 0, 800, 480);
     }
 
     private void renderText() {
